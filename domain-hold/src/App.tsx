@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { AnimatedBackground } from './components/AnimatedBackground'
-import { ChessGame } from './components/ChessGame'
 import { Hero } from './components/Hero'
 
 const HOSTNAME_FALLBACK = 'this domain'
+const ChessGame = lazy(() =>
+  import('./components/ChessGame').then((module) => ({ default: module.ChessGame })),
+)
 
 export default function App() {
   const chessSectionRef = useRef<HTMLElement | null>(null)
@@ -44,7 +46,16 @@ export default function App() {
             </p>
           </div>
 
-          <ChessGame />
+          <Suspense
+            fallback={
+              <div className="chess-loading shell-panel">
+                <span className="section-kicker">Loading board</span>
+                <p>Preparing a small, unnecessary but very welcome distraction.</p>
+              </div>
+            }
+          >
+            <ChessGame />
+          </Suspense>
         </motion.section>
       </main>
     </div>

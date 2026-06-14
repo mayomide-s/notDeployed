@@ -22,7 +22,7 @@ export function Hero({ hostname, onPlayClick }: HeroProps) {
           transition={{ delay: 0.15, duration: 0.45 }}
         >
           <Sparkles size={14} />
-          <span>Reserved • Building soon</span>
+          <span>{'Reserved \u2022 Building soon'}</span>
         </motion.div>
 
         <div className="hero-copy">
